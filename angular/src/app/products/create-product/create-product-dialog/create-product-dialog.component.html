@@ -173,11 +173,11 @@
                           name="generic"
                           id="generic"
                           required
-                          [(ngModel)]="product.genericId || genericId"
+                          [(ngModel)]="product.genericId"
                           #userNameModel="ngModel"
                           #userNameEl
                   >
-                      <option disabled [ngValue]="0" [selected]="genericId === undefined">Select Generic</option>
+                      <option disabled [ngValue]="0" [selected]="genericId === 0">Select Generic</option>
                       <option *ngFor="let generic of generics" [ngValue]="generic" [selected]="genericId === generic.id">{{ generic.name }}</option>
                   </select>
 <!--                  <abp-validation-summary-->
