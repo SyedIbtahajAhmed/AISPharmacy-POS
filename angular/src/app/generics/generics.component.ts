@@ -1,8 +1,8 @@
 import {Component, Injector, OnInit} from '@angular/core';
 import {PagedListingComponentBase, PagedRequestDto} from '../../shared/paged-listing-component-base';
 import {
-    GetGenericOutputDto,
-    MedicineGenericServiceProxy, UpdateGenericInputDto,
+    GetGenericOutputDto, GetProductOutputDto,
+    MedicineGenericServiceProxy, ProductServiceProxy, UpdateGenericInputDto, UpdateProductInputDto,
     UserDto,
     UserDtoPagedResultDto,
     UserServiceProxy
@@ -12,6 +12,11 @@ import {finalize} from 'rxjs/operators';
 import {ResetPasswordDialogComponent} from '../users/reset-password/reset-password.component';
 import {CreateUserDialogComponent} from '../users/create-user/create-user-dialog.component';
 import {EditUserDialogComponent} from '../users/edit-user/edit-user-dialog.component';
+import {CreateProductDialogComponent} from '../products/create-product/create-product-dialog/create-product-dialog.component';
+import {EditProductDialogComponent} from '../products/edit-product/edit-product-dialog/edit-product-dialog.component';
+import {CreateGenericDialogComponent} from './create-generic-dialog/create-generic-dialog.component';
+import {EditGenericDialogComponent} from './edit-generic-dialog/edit-generic-dialog.component';
+import {appModuleAnimation} from '../../shared/animations/routerTransition';
 
 
 class PagedGenericsRequestDto extends PagedRequestDto {
@@ -19,25 +24,31 @@ class PagedGenericsRequestDto extends PagedRequestDto {
     isActive: boolean | null;
 }
 
-
-class MedicineGenericServiceProxyerviceProxy {
-}
-
 @Component({
   selector: 'app-generics',
   templateUrl: './generics.component.html',
-  styleUrls: ['./generics.component.css']
+  styleUrls: ['./generics.component.css'],
+    animations: [appModuleAnimation()]
 })
 export class GenericsComponent extends PagedListingComponentBase<GetGenericOutputDto> {
     generics: GetGenericOutputDto[] = [];
     keyword = '';
+    totalGenerics: number;
+    advancedFiltersVisible = false;
 
     constructor(
         injector: Injector,
-        private _genericsService: MedicineGenericServiceProxy,
-        private _modalService: BsModalService
+        private _genericService: MedicineGenericServiceProxy,
+        private _modalService: BsModalService,
     ) {
         super(injector);
+        //
+        // this._productService.listAllProducts().subscribe((data: any) => {
+        //   // console.log(data);
+        //   this.products = data;
+        //   this.totalProducts = this.products.length;
+        //   console.log(this.totalProducts);
+        // });
     }
 
     createGeneric(): void {
@@ -60,7 +71,7 @@ export class GenericsComponent extends PagedListingComponentBase<GetGenericOutpu
     ): void {
         request.keyword = this.keyword;
 
-        this._genericsService
+        this._genericService
             .getAllGenerics(
                 request.keyword
             )
@@ -71,18 +82,19 @@ export class GenericsComponent extends PagedListingComponentBase<GetGenericOutpu
             )
             .subscribe((result: any) => {
                 this.generics = result;
+                this.totalGenerics = this.generics.length;
                 this.showPaging(result, pageNumber);
+                // console.log("The Result Of List Is \n\n" + JSON.stringify(this.products));
             });
     }
 
-
-    protected deleteGeneric(genericId: number): void {
+    protected deleteGeneric(generic: number): void {
         abp.message.confirm(
-            this.l('Generic ' + genericId + ' Will Be Deleted!'),
+            this.l('Product ' + generic + ' Will Be Deleted!'),
             undefined,
             (result: boolean) => {
                 if (result) {
-                    this._genericsService.delete(genericId).subscribe(() => {
+                    this._genericService.delete(generic).subscribe(() => {
                         abp.notify.success(this.l('Successfully Deleted'));
                         this.refresh();
                     });
@@ -91,30 +103,33 @@ export class GenericsComponent extends PagedListingComponentBase<GetGenericOutpu
         );
     }
 
+
+
     protected delete(entity: GetGenericOutputDto): void {
+        throw new Error('Method not implemented.');
     }
 
     // private showResetPasswordUserDialog(id?: number): void {
-    //     this._modalService.show(ResetPasswordDialogComponent, {
-    //         class: 'modal-lg',
-    //         initialState: {
-    //             id: id,
-    //         },
-    //     });
+    //   this._modalService.show(ResetPasswordDialogComponent, {
+    //     class: 'modal-lg',
+    //     initialState: {
+    //       id: id,
+    //     },
+    //   });
     // }
 
     private showCreateOrEditGenericDialog(id?: number): void {
         let createOrEditGenericDialog: BsModalRef;
         if (!id) {
             createOrEditGenericDialog = this._modalService.show(
-                CreateUserDialogComponent,
+                CreateGenericDialogComponent,
                 {
                     class: 'modal-lg',
                 }
             );
         } else {
             createOrEditGenericDialog = this._modalService.show(
-                EditUserDialogComponent,
+                EditGenericDialogComponent,
                 {
                     class: 'modal-lg',
                     initialState: {
@@ -127,5 +142,12 @@ export class GenericsComponent extends PagedListingComponentBase<GetGenericOutpu
         createOrEditGenericDialog.content.onSave.subscribe(() => {
             this.refresh();
         });
+    }
+
+
+    OnSearch(event: any) {
+        this.keyword = event.target.value;
+        this.getDataPage(1);
+        console.log(this.keyword);
     }
 }

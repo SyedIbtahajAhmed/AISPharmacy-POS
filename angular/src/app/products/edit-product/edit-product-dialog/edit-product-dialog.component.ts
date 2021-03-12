@@ -1,7 +1,12 @@
 import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
-import { ProductServiceProxy, UpdateProductInputDto } from '@shared/service-proxies/service-proxies';
+import {
+    CompanyServiceProxy,
+    GetCompanyOutputDto, GetGenericOutputDto, MedicineGenericServiceProxy,
+    ProductServiceProxy,
+    UpdateProductInputDto
+} from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
 
@@ -13,6 +18,9 @@ import { finalize } from 'rxjs/operators';
 export class EditProductDialogComponent extends AppComponentBase implements OnInit {
   saving = false;
   product = new UpdateProductInputDto();
+  companies: GetCompanyOutputDto[];
+  generics: GetGenericOutputDto[];
+  keyword = '';
   // roles: RoleDto[] = [];
   // checkedRolesMap: { [key: string]: boolean } = {};
   id: number;
@@ -22,6 +30,8 @@ export class EditProductDialogComponent extends AppComponentBase implements OnIn
   constructor(
     injector: Injector,
     public _productService: ProductServiceProxy,
+    private _companyService: CompanyServiceProxy,
+    private _genericService: MedicineGenericServiceProxy,
     public bsModalRef: BsModalRef,
     private router: Router
   ) {
@@ -31,11 +41,14 @@ export class EditProductDialogComponent extends AppComponentBase implements OnIn
   ngOnInit(): void {
     this._productService.getProductById(this.id).subscribe((result) => {
       this.product = result;
+    });
 
-      // this._userService.getRoles().subscribe((result2) => {
-      //   this.roles = result2.items;
-      //   this.setInitialRolesStatus();
-      // });
+    this._companyService.getAllCompanies(this.keyword).subscribe((result) => {
+        this.companies = result;
+    });
+
+    this._genericService.getAllGenerics(this.keyword).subscribe((result) => {
+        this.generics = result;
     });
   }
 

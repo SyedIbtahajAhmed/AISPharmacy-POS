@@ -48,6 +48,11 @@ export class CompaniesComponent extends PagedListingComponentBase<GetCompanyOutp
     this.keyword = '';
     this.getDataPage(1);
   }
+    OnSearch(event: any) {
+        this.keyword = event.target.value;
+        this.getDataPage(1);
+        console.log(this.keyword);
+    }
 
   protected list(
     request: PagedCompaniesRequestDto,
@@ -87,26 +92,28 @@ export class CompaniesComponent extends PagedListingComponentBase<GetCompanyOutp
     );
   }
 
-  protected SeeProducts(companyId?: number) : void{
+  private SeeProducts(companyId?: number): void {
+      console.log(companyId);
     let productsOfCompanyDialog: BsModalRef;
     if (companyId != null) {
-      productsOfCompanyDialog = this._modalService.show(
+        productsOfCompanyDialog = this._modalService.show(
         ProductsofCompanyComponent,
         {
           class: 'modal-xl',
           initialState: {
-            Id: companyId,
+              companyId: companyId,
           },
         }
       );
-    }
-    else {
+    } else {
       abp.message.error(
-        this.l("Company Does Not Exist.\nTry Adding First!")
+        this.l('Company Does Not Exist.\nTry Adding First!')
       );
     }
-    
 
+      productsOfCompanyDialog.content.onSave.subscribe(() => {
+          this.refresh();
+      });
   }
 
 
@@ -148,13 +155,5 @@ export class CompaniesComponent extends PagedListingComponentBase<GetCompanyOutp
     createOrEditCompanyDialog.content.onSave.subscribe(() => {
       this.refresh();
     });
-  }
-
-
-
-  OnSearch(event: any) {
-    this.keyword = event.target.value;
-    this.getDataPage(1);
-    console.log(this.keyword);
   }
 }

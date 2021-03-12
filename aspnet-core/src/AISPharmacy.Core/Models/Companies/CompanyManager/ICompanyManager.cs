@@ -10,11 +10,11 @@ namespace AISPharmacy.Models.Companies.CompanyManager
 {
     public interface ICompanyManager: IDomainService
     {
-        IEnumerable<Company> GetAllCompanies(string keyword);
+        List<Company> GetAllCompanies(string keyword);
 
         Company GetCompany(int companyId);
 
-        IEnumerable<Product> GetProductsOfCompany(int companyId, string keyword);
+        List<Product> GetProductsOfCompany(int companyId, string keyword);
 
         Task<Company> Create(Company company);
 

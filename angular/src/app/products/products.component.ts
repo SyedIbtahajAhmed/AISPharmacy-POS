@@ -23,7 +23,6 @@ class PagedProductsRequestDto extends PagedRequestDto {
   ]
 })
 export class ProductsComponent extends PagedListingComponentBase<GetProductOutputDto> {
-  
   products: GetProductOutputDto[] = [];
   keyword = '';
   totalProducts: number;
@@ -56,6 +55,12 @@ export class ProductsComponent extends PagedListingComponentBase<GetProductOutpu
     this.keyword = '';
     this.getDataPage(1);
   }
+
+    OnSearch(event: any) {
+        this.keyword = event.target.value;
+        this.getDataPage(1);
+        console.log(this.keyword);
+    }
 
   protected list(
     request: PagedProductsRequestDto,
@@ -137,10 +142,4 @@ export class ProductsComponent extends PagedListingComponentBase<GetProductOutpu
     });
   }
 
-
-  OnSearch(event: any) {
-    this.keyword = event.target.value;
-    this.getDataPage(1);
-    console.log(this.keyword);
-  }
 }

@@ -120,17 +120,25 @@
               #userNameModel="ngModel"
               #userNameEl
             /> -->
-            <select 
+            <select
               class="form-control"
               name="companyId"
               id="companyId"
               required
-              [(ngModel)]="companyId"
+              [(ngModel)]="product.companyId"
               #userNameModel="ngModel"
               #userNameEl
               >
-              <option disabled [ngValue]="" [selected]="companyId === null">Select Company</option>
-              <option *ngFor="let company of companies" [ngValue]="company.id" [selected]="companyId === company.id">{{ company.name }}</option>
+                <input
+                        type="text"
+                        class="form-control"
+                        name="keyword"
+                        [placeholder]="'SearchWithThreeDot' | localize"
+                        [(ngModel)]="keyword"
+                        (keyup)="OnSearch($event)"
+                />
+                <option disabled [ngValue]="0" [selected]="companyId === 0">Select Company</option>
+              <option *ngFor="let company of companies" [ngValue]="company" [selected]="companyId === company.id">{{ company.name }}</option>
             </select>
 
 
@@ -142,6 +150,44 @@
             ></abp-validation-summary> -->
           </div>
         </div>
+
+          <div class="form-group row required">
+              <label class="col-md-3 col-form-label" for="generic">
+                  {{ "Generic" | localize }}
+              </label>
+              <div class="col-md-9">
+<!--                  <input-->
+<!--                          type="text"-->
+<!--                          class="form-control"-->
+<!--                          name="generic"-->
+<!--                          id="generic"-->
+<!--                          required-->
+<!--                          minlength="2"-->
+<!--                          maxlength="32"-->
+<!--                          [(ngModel)]="product.genericId"-->
+<!--                          #nameModel="ngModel"-->
+<!--                          #nameEl-->
+<!--                  />-->
+                  <select
+                          class="form-control"
+                          name="generic"
+                          id="generic"
+                          required
+                          [(ngModel)]="product.genericId || genericId"
+                          #userNameModel="ngModel"
+                          #userNameEl
+                  >
+                      <option disabled [ngValue]="0" [selected]="genericId === undefined">Select Generic</option>
+                      <option *ngFor="let generic of generics" [ngValue]="generic" [selected]="genericId === generic.id">{{ generic.name }}</option>
+                  </select>
+<!--                  <abp-validation-summary-->
+<!--                          [control]="nameModel"-->
+<!--                          [controlEl]="nameEl"-->
+<!--                  ></abp-validation-summary>-->
+              </div>
+          </div>
+
+
         <!-- <div class="form-group row required">
           <label class="col-md-3 col-form-label" for="confirmPassword">
             {{ "ConfirmPassword" | localize }}

@@ -99,6 +99,84 @@
             ></abp-validation-summary>
           </div>
         </div>
+
+          <div class="form-group row required">
+              <label class="col-md-3 col-form-label" for="companyId">
+                  {{ "Company" | localize }}
+              </label>
+              <div class="col-md-9">
+                  <!-- <input
+                    type="select"
+                    class="form-control"
+                    name="companyId"
+                    id="companyId"
+                    required
+                    minlength="2"
+                    maxlength="32"
+                    [(ngModel)]="product.companyId"
+                    #userNameModel="ngModel"
+                    #userNameEl
+                  /> -->
+                  <select
+                          class="form-control"
+                          name="companyId"
+                          id="companyId"
+                          required
+                          [(ngModel)]="product.companyId"
+                          #userNameModel="ngModel"
+                          #userNameEl
+                  >
+                      <option disabled [ngValue]="" [selected]="product.companyId === null">Select Company</option>
+                      <option *ngFor="let company of companies" [ngValue]="company.id" [selected]="product.companyId === company.id">{{ company.name }}</option>
+                  </select>
+
+
+
+                  <!-- <abp-validation-summary
+                    [control]="passwordModel"
+                    [controlEl]="passwordEl"
+                    [customValidationErrors]="passwordValidationErrors"
+                  ></abp-validation-summary> -->
+              </div>
+          </div>
+
+          <div class="form-group row required">
+              <label class="col-md-3 col-form-label" for="generic">
+                  {{ "Generic" | localize }}
+              </label>
+              <div class="col-md-9">
+                  <!--                  <input-->
+                  <!--                          type="text"-->
+                  <!--                          class="form-control"-->
+                  <!--                          name="generic"-->
+                  <!--                          id="generic"-->
+                  <!--                          required-->
+                  <!--                          minlength="2"-->
+                  <!--                          maxlength="32"-->
+                  <!--                          [(ngModel)]="product.genericId"-->
+                  <!--                          #nameModel="ngModel"-->
+                  <!--                          #nameEl-->
+                  <!--                  />-->
+                  <select
+                          class="form-control"
+                          name="generic"
+                          id="generic"
+                          required
+                          [(ngModel)]="product.genericId"
+                          #userNameModel="ngModel"
+                          #userNameEl
+                  >
+                      <option disabled [ngValue]="" [selected]="product.genericId === null">Select Generic</option>
+                      <option *ngFor="let generic of generics" [ngValue]="generic.id" [selected]="product.genericId === generic.id">{{ generic.name }}</option>
+                  </select>
+                  <!--                  <abp-validation-summary-->
+                  <!--                          [control]="nameModel"-->
+                  <!--                          [controlEl]="nameEl"-->
+                  <!--                  ></abp-validation-summary>-->
+              </div>
+          </div>
+
+
         <!-- <div class="form-group row mb-0">
           <label class="col-md-3 col-form-label">
             {{ "IsActive" | localize }}

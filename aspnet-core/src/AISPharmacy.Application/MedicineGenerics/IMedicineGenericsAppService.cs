@@ -19,5 +19,6 @@ namespace AISPharmacy.MedicineGenerics
         void Update(UpdateGenericInputDto generic);
 
         void Delete(DeleteGenericInputDto generic);
+        void DeleteHard (DeleteGenericInputDto generic);
     }
 }

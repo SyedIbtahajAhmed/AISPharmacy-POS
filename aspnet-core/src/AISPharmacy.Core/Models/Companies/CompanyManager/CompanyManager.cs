@@ -14,14 +14,14 @@ namespace AISPharmacy.Models.Companies.CompanyManager
     public class CompanyManager : DomainService, ICompanyManager
     {
 
-        private readonly IRepository<Company,int> repository;
+        private readonly IRepository<Company, int> repository;
 
         private readonly IRepository<Product, int> productRepository;
 
         public CompanyManager(IRepository<Company> _repository, IRepository<Product> _repository2) 
         {
-            repository = _repository;
-            productRepository = _repository2;
+            this.repository = _repository;
+            this.productRepository = _repository2;
         }
 
 
@@ -52,20 +52,11 @@ namespace AISPharmacy.Models.Companies.CompanyManager
             }
         }
 
-        public IEnumerable<Company> GetAllCompanies(string keyword)
+        public List<Company> GetAllCompanies(string keyword)
         {
             if (keyword == null)
             {
-                var products = repository.GetAll()
-                .Select(x => new Company()
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Code = x.Code,
-                    Description = x.Description,
-                    Registration = x.Registration
-                }
-                ).ToList();
+                var products = repository.GetAllList();
 
                 return products;
             }
@@ -75,16 +66,7 @@ namespace AISPharmacy.Models.Companies.CompanyManager
                     .Where(x =>
                     (
                         x.Name.ToLower().Contains(keyword)
-                    ))
-                    .Select(x => new Company()
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                        Code = x.Code,
-                        Description = x.Description,
-                        Registration = x.Registration
-                    }
-                    ).ToList();
+                    )).ToList();
 
                 return products;
             }
@@ -104,24 +86,14 @@ namespace AISPharmacy.Models.Companies.CompanyManager
 
         }
 
-        public IEnumerable<Product> GetProductsOfCompany(int companyId, string keyword)
+        public List<Product> GetProductsOfCompany(int companyId, string keyword)
         {
             if (keyword == null)
             {
                 List<Product> products = productRepository.GetAll()
                 .Include(x => x.Company)
                 .Where(x => x.CompanyId == companyId)
-                .Select(x => new Product()
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Price = x.Price,
-                    Description = x.Description,
-                    Quantity = x.Quantity,
-                    CompanyId = x.CompanyId,
-                    Company = x.Company,
-                }
-                ).ToList();
+                .ToList();
 
                 return products;
             }
@@ -130,17 +102,7 @@ namespace AISPharmacy.Models.Companies.CompanyManager
                 List<Product> products = productRepository.GetAll()
                     .Include(x => x.Company)
                     .Where(x => (x.CompanyId == companyId) && x.Name.ToLower().Contains(keyword))
-                    .Select(x => new Product()
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                        Price = x.Price,
-                        Description = x.Description,
-                        Quantity = x.Quantity,
-                        CompanyId = x.CompanyId,
-                        Company = x.Company,
-                    }
-                    ).ToList();
+                    .ToList();
 
                 return products;
             }

@@ -1,23 +1,34 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { AbpValidationError } from '@shared/components/validation/abp-validation.api';
-import { CompanyServiceProxy, CreateProductInputDto, GetCompanyOutputDto, ProductServiceProxy, RoleDto } from '@shared/service-proxies/service-proxies';
+import {
+    CompanyServiceProxy,
+    CreateProductInputDto,
+    GetCompanyOutputDto, GetGenericOutputDto, GetProductOutputDto,
+    MedicineGenericServiceProxy,
+    ProductServiceProxy,
+    RoleDto
+} from '@shared/service-proxies/service-proxies';
 import { result } from 'lodash-es';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
+import {PagedListingComponentBase, PagedRequestDto} from '../../../../shared/paged-listing-component-base';
+import {type} from 'os';
 
 @Component({
-  selector: 'app-create-product-dialog',
-  templateUrl: './create-product-dialog.component.html',
-  styleUrls: ['./create-product-dialog.component.css']
-  //changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-create-product-dialog',
+    templateUrl: './create-product-dialog.component.html',
+    styleUrls: ['./create-product-dialog.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CreateProductDialogComponent extends AppComponentBase implements OnInit {
+export class CreateProductDialogComponent extends PagedListingComponentBase<GetProductOutputDto> implements OnInit {
 
   saving = false;
   product = new CreateProductInputDto();
   companies: GetCompanyOutputDto[];
+  generics: GetGenericOutputDto[];
   companyId: number;
+  genericId: number;
   keyword: string = null;
 
   @Output() onSave = new EventEmitter<any>();
@@ -25,25 +36,24 @@ export class CreateProductDialogComponent extends AppComponentBase implements On
   constructor(
     injector: Injector,
     public _productService: ProductServiceProxy,
+    private _genericService: MedicineGenericServiceProxy,
     private _companyService: CompanyServiceProxy,
     public bsModalRef: BsModalRef,
     private ref: ChangeDetectorRef
   ) {
     super(injector);
 
-    this._companyService.getAllCompanies(this.keyword).subscribe( (result) => {
-      this.companies = result;
+    this._companyService.getAllCompanies(this.keyword).subscribe( (data) => {
+      this.companies = data;
       this.ref.markForCheck();
-      // console.log(JSON.stringify(this.companies));
+      console.log(JSON.stringify(this.companies));
     });
 
-
-    //Setting CompanyId
-    if (this.companyId == undefined) {
-      this.companyId = 0;
-      this.ref.markForCheck();
-      console.log(this.companyId);
-    }
+    this._genericService.getAllGenerics(this.keyword).subscribe((data) => {
+        this.generics = data;
+        this.ref.markForCheck();
+        console.log(JSON.stringify(this.generics));
+    });
 
   }
 
@@ -51,14 +61,20 @@ export class CreateProductDialogComponent extends AppComponentBase implements On
 
     //console.log ( this.product.companyId );
 
-    console.log("Company ID Received: " + this.companyId);
-    // this.product.companyId = this.companyId;
-    // this.product.isActive = true;
+      // Setting CompanyId
+      if (this.companyId === undefined) {
+          this.companyId = 0;
+          // this.ref.markForCheck();
+          console.log('Company Id Changed To: ' + this.companyId);
+      }
+      if (this.genericId === undefined) {
+          this.genericId = 0;
+          // this.ref.markForCheck();
+          console.log('Generic Id Changed To: ' + this.genericId);
+      }
 
-    // this._userService.getRoles().subscribe((result) => {
-    //   this.roles = result.items;
-    //   this.setInitialRolesStatus();
-    // });
+      console.log('Company Id Received From Products Of Company: ' + this.companyId);
+      console.log('Generic Id Received From Products Of Company: ' + this.genericId);
   }
 
   // setInitialRolesStatus(): void {
@@ -89,6 +105,12 @@ export class CreateProductDialogComponent extends AppComponentBase implements On
   //   return roles;
   // }
 
+    OnSearch(event: any) {
+        this.keyword = event.target.value;
+        this.getDataPage(1);
+        console.log(this.keyword);
+    }
+
   save(): void {
     this.saving = true;
 
@@ -106,6 +128,13 @@ export class CreateProductDialogComponent extends AppComponentBase implements On
         window.location.reload();
       });
   }
+
+    protected list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {
+        throw new Error('Method not implemented.');
+    }
+    protected delete(entity: GetProductOutputDto): void {
+        throw new Error('Method not implemented.');
+    }
 
   // SelectCompanyDropdown(event: any) {
   //   this.companyId = event.target.value;

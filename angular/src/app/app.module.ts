@@ -46,6 +46,8 @@ import { CreateCompanyComponent } from './companies/create-company/create-compan
 import { EditCompanyComponent } from './companies/edit-company/edit-company.component';
 import { ProductsofCompanyComponent } from './companies/productsof-company/productsof-company.component';
 import { GenericsComponent } from './generics/generics.component';
+import { CreateGenericDialogComponent } from './generics/create-generic-dialog/create-generic-dialog.component';
+import { EditGenericDialogComponent } from './generics/edit-generic-dialog/edit-generic-dialog.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +88,13 @@ import { GenericsComponent } from './generics/generics.component';
     CreateCompanyComponent,
     EditCompanyComponent,
     ProductsofCompanyComponent,
-    GenericsComponent
+
+    // Generics
+    GenericsComponent,
+
+    CreateGenericDialogComponent,
+
+    EditGenericDialogComponent,
   ],
   imports: [
     CommonModule,

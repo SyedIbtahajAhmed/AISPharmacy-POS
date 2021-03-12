@@ -59,6 +59,13 @@ namespace AISPharmacy.MedicineGenerics
             return output;
         }
 
+        public void DeleteHard(DeleteGenericInputDto generic)
+        {
+            MedicineGeneric output = new MedicineGeneric();
+            CustomMapper<DeleteGenericInputDto, MedicineGeneric>.Map(generic, output);
+            this.medicineGenericsManager.DeleteHard(output.Id);
+        }
+
         public void Update(UpdateGenericInputDto generic)
         {
             MedicineGeneric updateGeneric = new MedicineGeneric();

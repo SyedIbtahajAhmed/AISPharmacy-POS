@@ -32,7 +32,7 @@ export class EditCompanyComponent extends AppComponentBase implements OnInit {
 
     this._companyService.getCompanyById(this.id).subscribe((result: any) => {
       this.company = result;
-      console.log(this.company);
+      // console.log(this.company);
     });
   }
 

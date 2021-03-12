@@ -18,5 +18,7 @@ namespace AISPharmacy.Models.MedicineGenerics.MedicineGenericsManager
         void Update(MedicineGeneric medicineGenerics);
 
         void Delete(int id);
+
+        void DeleteHard (int id);
     }
 }

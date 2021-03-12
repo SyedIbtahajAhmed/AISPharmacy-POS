@@ -68,6 +68,12 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
         'fas fa-cart-plus',
         'Pages.Companies'
       ),
+        new MenuItem(
+            this.l('Medicine Generics'),
+            '/app/generics',
+            'fas fa-cart-plus',
+            'Pages.MedicineGenerics'
+        ),
       new MenuItem(
         this.l('Roles'),
         '/app/roles',

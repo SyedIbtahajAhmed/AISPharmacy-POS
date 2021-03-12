@@ -44,6 +44,20 @@ namespace AISPharmacy.Models.MedicineGenerics.MedicineGenericsManager
             }
         }
 
+
+        public void DeleteHard(int id)
+        {   
+            var foundgeneric = this.repository.FirstOrDefault(x => x.Id == id);
+            if (foundgeneric != null)
+            {
+                this.repository.HardDelete(foundgeneric);
+            }
+            else
+            {
+                throw new UserFriendlyException("Generic Does Not Found. Try Adding First!");
+            }
+        }
+
         public List<MedicineGeneric> GetAllMedicineGenerics(string keyword)
         {
             if (keyword == null)
