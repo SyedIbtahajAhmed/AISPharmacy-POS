@@ -5,7 +5,9 @@ using AISPharmacy.Authorization;
 using AISPharmacy.MedicineGenerics.DTO;
 using AISPharmacy.Models.MedicineGenerics;
 using AISPharmacy.Models.MedicineGenerics.MedicineGenericsManager;
+using AISPharmacy.Models.Products;
 using AISPharmacy.Products;
+using AISPharmacy.Products.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,6 +73,20 @@ namespace AISPharmacy.MedicineGenerics
             MedicineGeneric updateGeneric = new MedicineGeneric();
             CustomMapper<UpdateGenericInputDto, MedicineGeneric>.Map(generic, updateGeneric);
             this.medicineGenericsManager.Update(updateGeneric);
+        }
+
+        public List<GetProductOutputDto> GetProductsOfGeneric(int genericId, string keyword)
+        {
+            var allProducts = medicineGenericsManager.GetProductsOfGenerics(genericId, keyword);
+            List<GetProductOutputDto> filteredProducts = new List<GetProductOutputDto>();
+
+            for (var i = 0; i < allProducts.Count; i++)
+            {
+                filteredProducts.Add(new GetProductOutputDto());
+                CustomMapper<Product, GetProductOutputDto>.Map(allProducts[i], filteredProducts[i]);
+            }
+
+            return filteredProducts;
         }
     }
 }

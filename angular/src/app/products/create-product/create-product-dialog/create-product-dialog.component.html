@@ -138,7 +138,7 @@
                         (keyup)="OnSearch($event)"
                 />
                 <option disabled [ngValue]="0" [selected]="companyId === 0">Select Company</option>
-              <option *ngFor="let company of companies" [ngValue]="company" [selected]="companyId === company.id">{{ company.name }}</option>
+              <option *ngFor="let company of companies" [ngValue]="company.id" [selected]="companyId === company.id">{{ company.name }}</option>
             </select>
 
 
@@ -178,7 +178,7 @@
                           #userNameEl
                   >
                       <option disabled [ngValue]="0" [selected]="genericId === 0">Select Generic</option>
-                      <option *ngFor="let generic of generics" [ngValue]="generic" [selected]="genericId === generic.id">{{ generic.name }}</option>
+                      <option *ngFor="let generic of generics" [ngValue]="generic.id" [selected]="genericId === generic.id">{{ generic.name }}</option>
                   </select>
 <!--                  <abp-validation-summary-->
 <!--                          [control]="nameModel"-->

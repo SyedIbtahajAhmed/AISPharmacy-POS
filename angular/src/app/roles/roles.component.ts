@@ -25,6 +25,7 @@ class PagedRolesRequestDto extends PagedRequestDto {
 export class RolesComponent extends PagedListingComponentBase<RoleDto> {
   roles: RoleDto[] = [];
   keyword = '';
+  selectValue = 10;
 
   constructor(
     injector: Injector,
@@ -107,4 +108,11 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto> {
       this.refresh();
     });
   }
+    SelectItemNo() {
+        if ( this.selectValue != null ) {
+            this.pageSize = this.selectValue;
+        } else {
+            this.selectValue = 10;
+        }
+    }
 }

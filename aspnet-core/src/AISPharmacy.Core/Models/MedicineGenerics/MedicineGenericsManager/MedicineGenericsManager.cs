@@ -1,6 +1,8 @@
 ﻿using Abp.Domain.Repositories;
 using Abp.Domain.Services;
 using Abp.UI;
+using AISPharmacy.Models.Products;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +15,12 @@ namespace AISPharmacy.Models.MedicineGenerics.MedicineGenericsManager
     {
         private readonly IRepository<MedicineGeneric, int> repository;
 
-        public MedicineGenericsManager(IRepository<MedicineGeneric, int> repository)
+        private readonly IRepository<Product, int> _productRepository;
+
+        public MedicineGenericsManager(IRepository<MedicineGeneric, int> repository, IRepository<Product, int> repository2)
         {
             this.repository = repository;
+            this._productRepository = repository2;  
         }
 
         public async Task<MedicineGeneric> Create(MedicineGeneric medicineGenerics)
@@ -86,6 +91,28 @@ namespace AISPharmacy.Models.MedicineGenerics.MedicineGenericsManager
             else
             {
                 throw new UserFriendlyException("Medicine Generic Not Found!");
+            }
+        }
+
+        public List<Product> GetProductsOfGenerics(int genericId, string keyword)
+        {
+            if (keyword == null)
+            {
+                List<Product> products = _productRepository.GetAll()
+                    .Include(x => x.Generic)
+                    .Where(x => x.GenericId == genericId)
+                    .ToList();
+
+                return products;
+            }
+            else
+            {
+                List<Product> products = _productRepository.GetAll()
+                    .Include(x => x.Generic)
+                    .Where(x => x.GenericId == genericId && x.Name.ToLower().Contains(keyword))
+                    .ToList();
+
+                return products;
             }
         }
 

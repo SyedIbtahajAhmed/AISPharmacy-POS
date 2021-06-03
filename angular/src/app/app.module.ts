@@ -48,6 +48,8 @@ import { ProductsofCompanyComponent } from './companies/productsof-company/produ
 import { GenericsComponent } from './generics/generics.component';
 import { CreateGenericDialogComponent } from './generics/create-generic-dialog/create-generic-dialog.component';
 import { EditGenericDialogComponent } from './generics/edit-generic-dialog/edit-generic-dialog.component';
+import { ProductsOfGenericComponent } from './generics/products-of-generic/products-of-generic.component';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -95,22 +97,25 @@ import { EditGenericDialogComponent } from './generics/edit-generic-dialog/edit-
     CreateGenericDialogComponent,
 
     EditGenericDialogComponent,
+
+    ProductsOfGenericComponent,
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    HttpClientJsonpModule,
-    ModalModule.forChild(),
-    BsDropdownModule,
-    CollapseModule,
-    TabsModule,
-    AppRoutingModule,
-    ServiceProxyModule,
-    SharedModule,
-    NgxPaginationModule,
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        HttpClientJsonpModule,
+        ModalModule.forChild(),
+        BsDropdownModule,
+        CollapseModule,
+        TabsModule,
+        AppRoutingModule,
+        ServiceProxyModule,
+        SharedModule,
+        NgxPaginationModule,
+        MatButtonModule,
+    ],
   providers: [],
   entryComponents: [
     // tenants

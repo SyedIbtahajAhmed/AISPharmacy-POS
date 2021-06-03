@@ -28,8 +28,8 @@ export class HomeComponent extends AppComponentBase implements OnInit {
       //console.log(result);
     });
   }
-  
+
   ngOnInit(): void {
-    
+
   }
 }

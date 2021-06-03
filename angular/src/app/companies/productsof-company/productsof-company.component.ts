@@ -26,6 +26,7 @@ export class ProductsofCompanyComponent extends PagedListingComponentBase<GetPro
     totalProducts: number;
     advancedFiltersVisible = false;
     companyId: number;
+    selectValue = 10;
 
     @Output() onSave = new EventEmitter<any>();
 
@@ -103,6 +104,14 @@ export class ProductsofCompanyComponent extends PagedListingComponentBase<GetPro
         this.keyword = event.target.value;
         this.getDataPage(1);
         console.log(this.keyword);
+    }
+
+    SelectItemNo() {
+        if ( this.selectValue != null ) {
+            this.pageSize = this.selectValue;
+        } else {
+            this.selectValue = 10;
+        }
     }
 
     protected list(

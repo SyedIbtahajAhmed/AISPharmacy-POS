@@ -27,6 +27,7 @@ export class ProductsComponent extends PagedListingComponentBase<GetProductOutpu
   keyword = '';
   totalProducts: number;
   advancedFiltersVisible = false;
+  selectValue = 10;
 
   constructor(
     injector: Injector,
@@ -34,13 +35,16 @@ export class ProductsComponent extends PagedListingComponentBase<GetProductOutpu
     private _modalService: BsModalService,
   ) {
     super(injector);
+    console.log(this.selectValue);
     //
     // this._productService.listAllProducts().subscribe((data: any) => {
     //   // console.log(data);
     //   this.products = data;
-    //   this.totalProducts = this.products.length;
+    //   this.totalProdu
+      //   cts = this.products.length;
     //   console.log(this.totalProducts);
     // });
+
   }
 
   createProduct(): void {
@@ -60,6 +64,14 @@ export class ProductsComponent extends PagedListingComponentBase<GetProductOutpu
         this.keyword = event.target.value;
         this.getDataPage(1);
         console.log(this.keyword);
+    }
+
+    SelectItemNo() {
+      if ( this.selectValue != null ) {
+          this.pageSize = this.selectValue;
+      } else {
+          this.selectValue = 10;
+      }
     }
 
   protected list(

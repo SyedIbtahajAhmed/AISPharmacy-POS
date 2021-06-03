@@ -1,4 +1,5 @@
 ﻿using Abp.Domain.Services;
+using AISPharmacy.Models.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace AISPharmacy.Models.MedicineGenerics.MedicineGenericsManager
         List<MedicineGeneric> GetAllMedicineGenerics(string keyword);
 
         MedicineGeneric GetMedicineGenerics(int id);
+
+        List<Product> GetProductsOfGenerics(int genericId, string keyword);
 
         Task<MedicineGeneric> Create(MedicineGeneric medicineGenerics);
 

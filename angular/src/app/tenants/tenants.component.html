@@ -190,18 +190,25 @@
         </div>
         <div class="card-footer bg-light border-top">
           <div class="row">
-            <div class="col-sm-4 col-12 text-sm-left text-center">
-              <button class="btn btn-secondary" (click)="refresh()">
+            <div class="col-sm-1 col-12 text-sm-left text-center">
+              <button class="btn btn-secondary shadow" (click)="refresh()">
                 <i class="fas fa-redo-alt"></i>
               </button>
             </div>
+              <div class="col-sm-3 col-12 text-sm-left text-center">
+                  <select class="form-select form-control w-auto shadow" name="list-no" [(ngModel)]="selectValue" (change)="SelectItemNo()" aria-label="Default select example">
+                      <option value="5">Five</option>
+                      <option value="10">Ten</option>
+                      <option value="15">Fifteen</option>
+                  </select>
+              </div>
             <div class="col-sm-4 col-12 text-center">
               <p class="mb-0 my-2">
                 {{ "TotalRecordsCount" | localize: totalItems }}
               </p>
             </div>
             <div class="col-sm-4 col-12">
-              <div class="float-sm-right m-auto">
+              <div class="float-sm-right m-auto shadow">
                 <abp-pagination-controls
                   id="server"
                   (pageChange)="getDataPage($event)"

@@ -12,26 +12,24 @@
     <div class="container-fluid">
       <div class="row">
           <div *ngFor="let p of products" class="col-lg-4 col-6">
-            <div class="small-box bg-success badge-info">
+            <div class="small-box bg-info badge-info">
               <div class="inner">
                 <h3>{{ p.name }}</h3>
                 <h4>Rs. {{ p.price }}</h4>
               </div>
               <div class="icon">
-                <i class="fas fa-star"></i>
+                <i class="fas fa-cart-plus"></i>
               </div>
-              <div class="row small-box-footer">
-                  <div class="col-lg-6">
-                      <a [routerLink]="['../product']"><i class="fas fa-info"></i> More Info</a>
+              <div class="align-items-lg-baseline" style=" display: flex; justify-content: center">
+                  <div class="small-box-footer">
+                          <button mat-raised-button color="primary">More Info</button>
+                        <button mat-raised-button color="accent">Add To Cart</button>
                   </div>
-                <div class="col-lg-6">
-                    <a [routerLink]="['../product']"><i class="fas fa-info"></i> Add To Cart</a>
-                </div>
               </div>
             </div>
           </div>
           </div>
-        
+
         <!-- <div class="col-lg-3 col-6">
           <div class="small-box bg-info">
             <div class="inner">

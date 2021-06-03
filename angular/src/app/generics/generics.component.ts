@@ -17,6 +17,8 @@ import {EditProductDialogComponent} from '../products/edit-product/edit-product-
 import {CreateGenericDialogComponent} from './create-generic-dialog/create-generic-dialog.component';
 import {EditGenericDialogComponent} from './edit-generic-dialog/edit-generic-dialog.component';
 import {appModuleAnimation} from '../../shared/animations/routerTransition';
+import {ProductsofCompanyComponent} from '../companies/productsof-company/productsof-company.component';
+import {ProductsOfGenericComponent} from './products-of-generic/products-of-generic.component';
 
 
 class PagedGenericsRequestDto extends PagedRequestDto {
@@ -35,6 +37,7 @@ export class GenericsComponent extends PagedListingComponentBase<GetGenericOutpu
     keyword = '';
     totalGenerics: number;
     advancedFiltersVisible = false;
+    selectValue = 10;
 
     constructor(
         injector: Injector,
@@ -64,6 +67,14 @@ export class GenericsComponent extends PagedListingComponentBase<GetGenericOutpu
         this.getDataPage(1);
     }
 
+    SelectItemNo() {
+        if ( this.selectValue != null ) {
+            this.pageSize = this.selectValue;
+        } else {
+            this.selectValue = 10;
+        }
+    }
+
     protected list(
         request: PagedGenericsRequestDto,
         pageNumber: number,
@@ -90,7 +101,7 @@ export class GenericsComponent extends PagedListingComponentBase<GetGenericOutpu
 
     protected deleteGeneric(generic: number): void {
         abp.message.confirm(
-            this.l('Product ' + generic + ' Will Be Deleted!'),
+            this.l('Generic with Id: ' + generic + ' Will Be Deleted!'),
             undefined,
             (result: boolean) => {
                 if (result) {
@@ -118,6 +129,30 @@ export class GenericsComponent extends PagedListingComponentBase<GetGenericOutpu
     //   });
     // }
 
+    private SeeProducts(genericId?: number): void {
+        console.log(genericId);
+        let productsOfGenericDialog: BsModalRef;
+        if (genericId != null) {
+            productsOfGenericDialog = this._modalService.show(
+                ProductsOfGenericComponent,
+                {
+                    class: 'modal-xl',
+                    initialState: {
+                        genericId: genericId,
+                    },
+                }
+            );
+        } else {
+            abp.message.error(
+                this.l('Generic Does Not Exist.\nTry Adding First!')
+            );
+        }
+
+        productsOfGenericDialog.content.onSave.subscribe(() => {
+            this.refresh();
+        });
+    }
+
     private showCreateOrEditGenericDialog(id?: number): void {
         let createOrEditGenericDialog: BsModalRef;
         if (!id) {
@@ -133,7 +168,7 @@ export class GenericsComponent extends PagedListingComponentBase<GetGenericOutpu
                 {
                     class: 'modal-lg',
                     initialState: {
-                        id: id,
+                        genericId: id,
                     },
                 }
             );

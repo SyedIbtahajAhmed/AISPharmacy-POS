@@ -26,6 +26,7 @@ export class CompaniesComponent extends PagedListingComponentBase<GetCompanyOutp
   keyword = '';
   totalCompanies: number;
   advancedFiltersVisible = false;
+  selectValue = 10;
 
   constructor(
     injector: Injector,
@@ -52,6 +53,14 @@ export class CompaniesComponent extends PagedListingComponentBase<GetCompanyOutp
         this.keyword = event.target.value;
         this.getDataPage(1);
         console.log(this.keyword);
+    }
+
+    SelectItemNo() {
+        if ( this.selectValue != null ) {
+            this.pageSize = this.selectValue;
+        } else {
+            this.selectValue = 10;
+        }
     }
 
   protected list(

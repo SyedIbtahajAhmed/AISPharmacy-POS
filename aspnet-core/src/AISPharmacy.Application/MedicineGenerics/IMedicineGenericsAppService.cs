@@ -1,5 +1,6 @@
 ﻿using Abp.Application.Services;
 using AISPharmacy.MedicineGenerics.DTO;
+using AISPharmacy.Products.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace AISPharmacy.MedicineGenerics
         List<GetGenericOutputDto> GetAllGenerics(string keyword);
 
         GetGenericOutputDto GetGenericById(int genericId);
+
+        List<GetProductOutputDto> GetProductsOfGeneric(int genericId, string keyword);
 
         Task Create(CreateGenericInputDto generic);
 

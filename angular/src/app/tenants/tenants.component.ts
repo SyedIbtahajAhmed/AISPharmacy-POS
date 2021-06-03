@@ -28,6 +28,7 @@ export class TenantsComponent extends PagedListingComponentBase<TenantDto> {
   keyword = '';
   isActive: boolean | null;
   advancedFiltersVisible = false;
+  selectValue = 10;
 
   constructor(
     injector: Injector,
@@ -122,4 +123,12 @@ export class TenantsComponent extends PagedListingComponentBase<TenantDto> {
     this.isActive = undefined;
     this.getDataPage(1);
   }
+
+    SelectItemNo() {
+        if ( this.selectValue != null ) {
+            this.pageSize = this.selectValue;
+        } else {
+            this.selectValue = 10;
+        }
+    }
 }

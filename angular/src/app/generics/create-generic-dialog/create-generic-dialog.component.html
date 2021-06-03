@@ -1,1 +1,284 @@
-<p>create-generic-dialog works!</p>
+<form
+        class="form-horizontal"
+        autocomplete="off"
+        #createGenericModal="ngForm"
+        (ngSubmit)="save()"
+>
+    <abp-modal-header
+            [title]="'Create New Generic' | localize"
+            (onCloseClick)="bsModalRef.hide()"
+    ></abp-modal-header>
+    <div class="modal-body">
+        <tabset>
+            <tab [heading]="'Generic Details' | localize" class="pt-3 px-2">
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label" for="name">
+                        {{ "Generic Name" | localize }}
+                    </label>
+                    <div class="col-md-9">
+                        <input
+                                type="text"
+                                class="form-control"
+                                name="name"
+                                id="name"
+                                required
+                                minlength="2"
+                                maxlength="32"
+                                [(ngModel)]="generic.name"
+                                #nameModel="ngModel"
+                                #nameEl
+                        />
+                        <abp-validation-summary
+                                [control]="nameModel"
+                                [controlEl]="nameEl"
+                        ></abp-validation-summary>
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label" for="code">
+                        {{ "Generic Code" | localize }}
+                    </label>
+                    <div class="col-md-9">
+                        <input
+                                type="number"
+                                class="form-control"
+                                name="code"
+                                id="code"
+                                required
+                                maxlength="32"
+                                [(ngModel)]="generic.code"
+                                #codeModel="ngModel"
+                                #codeEl
+                        />
+                        <abp-validation-summary
+                                [control]="codeModel"
+                                [controlEl]="codeEl"
+                        ></abp-validation-summary>
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-3 col-form-label" for="description">
+                        {{ "Description" | localize }}
+                    </label>
+                    <div class="col-md-9">
+                        <input
+                                type="text"
+                                class="form-control"
+                                name="description"
+                                id="description"
+                                required
+                                minlength="2"
+                                [(ngModel)]="generic.description"
+                                #descriptionModel="ngModel"
+                                #descriptionEl
+                        />
+                        <abp-validation-summary
+                                [control]="descriptionModel"
+                                [controlEl]="descriptionEl"
+                        ></abp-validation-summary>
+                    </div>
+                </div>
+<!--                <div class="form-group row required">-->
+<!--                    <label class="col-md-3 col-form-label" for="quantity">-->
+<!--                        {{ "Quantity" | localize }}-->
+<!--                    </label>-->
+<!--                    <div class="col-md-9">-->
+<!--                        <input-->
+<!--                                type="number"-->
+<!--                                class="form-control"-->
+<!--                                name="quantity"-->
+<!--                                id="quantity"-->
+<!--                                required-->
+<!--                                minlength="2"-->
+<!--                                maxlength="32"-->
+<!--                                [(ngModel)]="product.quantity"-->
+<!--                                #userNameModel="ngModel"-->
+<!--                                #userNameEl-->
+<!--                        />-->
+<!--                        &lt;!&ndash; <abp-validation-summary-->
+<!--                          [control]="passwordModel"-->
+<!--                          [controlEl]="passwordEl"-->
+<!--                          [customValidationErrors]="passwordValidationErrors"-->
+<!--                        ></abp-validation-summary> &ndash;&gt;-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="form-group row required">-->
+<!--                    <label class="col-md-3 col-form-label" for="companyId">-->
+<!--                        {{ "Company" | localize }}-->
+<!--                    </label>-->
+<!--                    <div class="col-md-9">-->
+<!--                        &lt;!&ndash; <input-->
+<!--                          type="select"-->
+<!--                          class="form-control"-->
+<!--                          name="companyId"-->
+<!--                          id="companyId"-->
+<!--                          required-->
+<!--                          minlength="2"-->
+<!--                          maxlength="32"-->
+<!--                          [(ngModel)]="product.companyId"-->
+<!--                          #userNameModel="ngModel"-->
+<!--                          #userNameEl-->
+<!--                        /> &ndash;&gt;-->
+<!--                        <select-->
+<!--                                class="form-control"-->
+<!--                                name="companyId"-->
+<!--                                id="companyId"-->
+<!--                                required-->
+<!--                                [(ngModel)]="product.companyId"-->
+<!--                                #userNameModel="ngModel"-->
+<!--                                #userNameEl-->
+<!--                        >-->
+<!--                            <input-->
+<!--                                    type="text"-->
+<!--                                    class="form-control"-->
+<!--                                    name="keyword"-->
+<!--                                    [placeholder]="'SearchWithThreeDot' | localize"-->
+<!--                                    [(ngModel)]="keyword"-->
+<!--                                    (keyup)="OnSearch($event)"-->
+<!--                            />-->
+<!--                            <option disabled [ngValue]="0" [selected]="companyId === 0">Select Company</option>-->
+<!--                            <option *ngFor="let company of companies" [ngValue]="company" [selected]="companyId === company.id">{{ company.name }}</option>-->
+<!--                        </select>-->
+
+
+
+<!--                        &lt;!&ndash; <abp-validation-summary-->
+<!--                          [control]="passwordModel"-->
+<!--                          [controlEl]="passwordEl"-->
+<!--                          [customValidationErrors]="passwordValidationErrors"-->
+<!--                        ></abp-validation-summary> &ndash;&gt;-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="form-group row required">-->
+<!--                    <label class="col-md-3 col-form-label" for="generic">-->
+<!--                        {{ "Generic" | localize }}-->
+<!--                    </label>-->
+<!--                    <div class="col-md-9">-->
+<!--                        &lt;!&ndash;                  <input&ndash;&gt;-->
+<!--                        &lt;!&ndash;                          type="text"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                          class="form-control"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                          name="generic"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                          id="generic"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                          required&ndash;&gt;-->
+<!--                        &lt;!&ndash;                          minlength="2"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                          maxlength="32"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                          [(ngModel)]="product.genericId"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                          #nameModel="ngModel"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                          #nameEl&ndash;&gt;-->
+<!--                        &lt;!&ndash;                  />&ndash;&gt;-->
+<!--                        <select-->
+<!--                                class="form-control"-->
+<!--                                name="generic"-->
+<!--                                id="generic"-->
+<!--                                required-->
+<!--                                [(ngModel)]="product.genericId"-->
+<!--                                #userNameModel="ngModel"-->
+<!--                                #userNameEl-->
+<!--                        >-->
+<!--                            <option disabled [ngValue]="0" [selected]="genericId === 0">Select Generic</option>-->
+<!--                            <option *ngFor="let generic of generics" [ngValue]="generic" [selected]="genericId === generic.id">{{ generic.name }}</option>-->
+<!--                        </select>-->
+<!--                        &lt;!&ndash;                  <abp-validation-summary&ndash;&gt;-->
+<!--                        &lt;!&ndash;                          [control]="nameModel"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                          [controlEl]="nameEl"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                  ></abp-validation-summary>&ndash;&gt;-->
+<!--                    </div>-->
+<!--                </div>-->
+
+
+                <!-- <div class="form-group row required">
+                  <label class="col-md-3 col-form-label" for="confirmPassword">
+                    {{ "ConfirmPassword" | localize }}
+                  </label>
+                  <div class="col-md-9">
+                    <input
+                      type="password"
+                      class="form-control"
+                      name="confirmPassword"
+                      id="confirmPassword"
+                      required
+                      maxlength="32"
+                      validateEqual="password"
+                      reverse="false"
+                      ngModel
+                      #confirmPasswordModel="ngModel"
+                      #confirmPasswordEl
+                    />
+                    <abp-validation-summary
+                      [control]="confirmPasswordModel"
+                      [controlEl]="confirmPasswordEl"
+                      [customValidationErrors]="confirmPasswordValidationErrors"
+                    ></abp-validation-summary>
+                  </div>
+                </div>
+                <div class="form-group row required">
+                  <label class="col-md-3 col-form-label" for="emailAddress">
+                    {{ "EmailAddress" | localize }}
+                  </label>
+                  <div class="col-md-9">
+                    <input
+                      type="email"
+                      class="form-control"
+                      name="emailAddress"
+                      id="emailAddress"
+                      required
+                      maxlength="256"
+                      pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$"
+                      [(ngModel)]="user.emailAddress"
+                      #emailAddressModel="ngModel"
+                      #emailAddressEl
+                    />
+                    <abp-validation-summary
+                      [control]="emailAddressModel"
+                      [controlEl]="emailAddressEl"
+                    ></abp-validation-summary>
+                  </div>
+                </div> -->
+                <!-- <div class="form-group row mb-0">
+                  <label class="col-md-3 col-form-label">
+                    {{ "IsActive" | localize }}
+                  </label>
+                  <div class="col-md-9">
+                    <div class="custom-control custom-checkbox">
+                      <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        name="isActive"
+                        id="isActive"
+                        [(ngModel)]="product.isActive"
+                      />
+                      <label class="custom-control-label mt-2" for="isActive"></label>
+                    </div>
+                  </div>
+                </div> -->
+            </tab>
+            <!-- <tab [heading]="'UserRoles' | localize" class="pt-3 px-2">
+              <div class="form-group row mb-0">
+                <ng-container *ngFor="let role of roles; let i = index">
+                  <div class="col-md-6">
+                    <div class="custom-control custom-checkbox">
+                      <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        [id]="'role_' + i"
+                        [checked]="isRoleChecked(role.normalizedName)"
+                        (change)="onRoleChange(role, $event)"
+                      />
+                      <label class="custom-control-label" [for]="'role_' + i">
+                        {{ role.name }}
+                      </label>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </tab> -->
+        </tabset>
+    </div>
+    <abp-modal-footer
+            [cancelDisabled]="saving"
+            [saveDisabled]="!createGenericModal.form.valid || saving"
+            (onCancelClick)="bsModalRef.hide()"
+    ></abp-modal-footer>
+</form>
